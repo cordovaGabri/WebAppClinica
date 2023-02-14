@@ -14,7 +14,28 @@
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <style>
+     .modalBackround 
+        {
+            background-color: black;
+            filter: alpha(opacity=0.9) !important;
+            opacity: 0.6 !important;
+            z-index: 20;
+        }
 
+        .modalPopup 
+        {
+            padding: 20px 0px 24px 10px;
+            position: relative;
+            width: 80%;
+            height: 66px;
+            background-color: white;
+            border: 1px solid black;
+            top: 0px;
+            left: 0px;
+        }
+
+    </style>
 </head>
 <body>
     <form runat="server">

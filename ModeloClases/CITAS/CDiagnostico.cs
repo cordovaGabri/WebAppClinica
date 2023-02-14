@@ -4,26 +4,25 @@ using System.Data.SqlClient;
 
 namespace ModeloClases.CITAS
 {
-    public class CCita:CDatos
+    public class CDiagnostico:CDatos
     {
-        public CCita(string Conexion)
+        public CDiagnostico(string Conexion)
         {
             Con = Conexion;
         }
 
-        public DataTable GetDatos(int Id, DateTime FechaCita, int IdPaciente, int IdDoctor, int Opcion)
+        public DataTable GetDatos(int Id, string Observacion, int IdCita, int Opcion)
         {
            
             try
             {
                 Conectar(Con);
-                ObjAdapter = new SqlDataAdapter("SP_TB_CITA_GET", ObjConnection);
+                ObjAdapter = new SqlDataAdapter("SP_TB_DIAGNOSTICO_GET", ObjConnection);
                 ObjAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
                 ObjAdapter.SelectCommand.Parameters.AddWithValue("@ID", Id);
-                ObjAdapter.SelectCommand.Parameters.AddWithValue("@FECH_CITA", FechaCita);
-                ObjAdapter.SelectCommand.Parameters.AddWithValue("@ID_PACIENTE", IdPaciente);
-                ObjAdapter.SelectCommand.Parameters.AddWithValue("@ID_DOCTOR", IdDoctor);
+                ObjAdapter.SelectCommand.Parameters.AddWithValue("@DS_OBSERVACION", Observacion);
+                ObjAdapter.SelectCommand.Parameters.AddWithValue("@ID_CITA", IdCita);
                 ObjAdapter.SelectCommand.Parameters.AddWithValue("@OPCION", Opcion);
 
                 ObjAdapter.Fill(dt);
@@ -38,7 +37,7 @@ namespace ModeloClases.CITAS
             return dt;
         }
 
-        public CDatos Actualizacion(int Id, DateTime FechaCita, DateTime HRCita, int IdPaciente, int IdDoctor, string LoginUsuario, TipoActualizacion OpcionActualizacion)
+        public CDatos Actualizacion(int Id, string Observacion, int IdCita, string LoginUsuario, TipoActualizacion OpcionActualizacion)
         {
             CDatos objResultado = new CDatos();
             try
@@ -48,13 +47,13 @@ namespace ModeloClases.CITAS
                 switch (OpcionActualizacion)
                 {
                     case TipoActualizacion.Adicionar:
-                        StrCommand = "SP_TB_CITA_INSERT";
+                        StrCommand = "SP_TB_DIAGNOSTICO_INSERT";
                         break;
                     case TipoActualizacion.Actualizar:
-                        StrCommand = "SP_TB_CITA_UPDATE";
+                        StrCommand = "SP_TB_DIAGNOSTICO_UPDATE";
                         break;
                     case TipoActualizacion.Eliminar:
-                        StrCommand = "SP_TB_CITA_DELETE";
+                        StrCommand = "SP_TB_DIAGNOSTICO_DELETE";
                         break;
                 }
 
@@ -74,10 +73,8 @@ namespace ModeloClases.CITAS
                     ObjCommand.Parameters.AddWithValue("@ID", Id);
                 }
 
-                ObjCommand.Parameters.AddWithValue("@FECH_CITA", FechaCita);
-                ObjCommand.Parameters.AddWithValue("@HR_CITA", HRCita);
-                ObjCommand.Parameters.AddWithValue("@ID_PACIENTE", IdPaciente);
-                ObjCommand.Parameters.AddWithValue("@ID_DOCTOR", IdDoctor);
+                ObjCommand.Parameters.AddWithValue("@DS_OBSERVACION", Observacion);
+                ObjCommand.Parameters.AddWithValue("@ID_CITA", IdCita);
                 ObjCommand.Parameters.AddWithValue("@LOGIN_USUARIO", LoginUsuario);
 
                 ObjParam = ObjCommand.Parameters.Add("@FILAS_AFECTADAS", SqlDbType.Int, 0);
