@@ -1,0 +1,43 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MasterForms.master.cs" Inherits="WebAppClinica.MasterForms" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+<asp:Content ID="Content1" runat="server" ContentPlaceHolderID="MainContent">
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <br />
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        <asp:Label ID="LblTituloPantalla" runat="server" Text="Label" Width="100%" Font-Bold="True" Font-Size="Medium" CssClass="form-label"></asp:Label>
+                    </div>
+                </div>
+                </div>
+                <ajaxtoolkit:tabcontainer id="TabContainer" runat="server" activetabindex="1" width="100%">
+                    <ajaxtoolkit:tabpanel runat="server" headertext="Lista" id="TabPanel1">
+                        <contenttemplate>
+                            <asp:GridView runat="server" ID="GVLista" Width="100%"></asp:GridView>
+                        </contenttemplate>
+                    </ajaxtoolkit:tabpanel>
+                    <ajaxtoolkit:tabpanel id="TabPanel2" runat="server" headertext="Datos">
+                        <contenttemplate>
+                            <form class="row g-3">
+                                <asp:Label ID="Label2" runat="server" Text="Label" CssClass="form-label col-sm-1"></asp:Label>
+                                <div class="col-md-5">
+                                    <asp:TextBox ID="TextBox1" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                                <asp:Label ID="Label3" runat="server" Text="Label" CssClass="form-label col-sm-1"></asp:Label>
+                                <div class="col-md-5">
+                                    <asp:TextBox ID="TextBox2" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                            </form>
+                        </contenttemplate>
+                    </ajaxtoolkit:tabpanel>
+                </ajaxtoolkit:tabcontainer>
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
+
+    </asp:ContentPlaceHolder>
+</asp:Content>
+

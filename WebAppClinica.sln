@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppClinica", "WebAppClin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppClinica.Tests", "WebAppClinica.Tests\WebAppClinica.Tests.csproj", "{DEB1C2C4-1AC0-4914-BDB4-E80AA193FD3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModeloClases", "ModeloClases\ModeloClases.csproj", "{2F420EAF-2BEE-449A-9ADE-4BB85438A639}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DEB1C2C4-1AC0-4914-BDB4-E80AA193FD3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEB1C2C4-1AC0-4914-BDB4-E80AA193FD3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEB1C2C4-1AC0-4914-BDB4-E80AA193FD3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F420EAF-2BEE-449A-9ADE-4BB85438A639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F420EAF-2BEE-449A-9ADE-4BB85438A639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F420EAF-2BEE-449A-9ADE-4BB85438A639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F420EAF-2BEE-449A-9ADE-4BB85438A639}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
