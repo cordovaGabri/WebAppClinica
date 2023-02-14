@@ -30,6 +30,7 @@ namespace WebAppClinica.CITAS
             FillCboDoctor();
             FillCboPaciente();
             FillGVLista();
+            FillGVDiagnostico();
         }
 
         public void Limpiar()
@@ -37,8 +38,10 @@ namespace WebAppClinica.CITAS
             TxtIDCita.Text = "0";
             TxtFechaCita.Text = "";
             TxtHrCita.Text = "0";
+            TxtObservacion.Text = "";
             FillCboDoctor();
             FillCboPaciente();
+            FillGVDiagnostico();
             TabContainer.ActiveTab = TabDatos;
         }
 
@@ -68,6 +71,16 @@ namespace WebAppClinica.CITAS
             GVLista.DataSource = dt;
             GVLista.DataBind();
         }
+
+        public void FillGVDiagnostico()
+        {
+            CDiagnostico obDiagnostico = new CDiagnostico(StrConexion);
+            dt = obDiagnostico.GetDatos(0, "", Convert.ToInt32(TxtIDCita.Text), 1);
+
+            GVDiagnostico.DataSource = dt;
+            GVDiagnostico.DataBind();
+        }
+
         protected void BtnLimpiar_Click(object sender, ImageClickEventArgs e)
         {
             Limpiar();
@@ -160,7 +173,7 @@ namespace WebAppClinica.CITAS
             CboPaciente.SelectedValue = GVLista.DataKeys[Id].Values["ID_PACIENTE"].ToString();
             TxtFechaCita.Text = string.Format("{0:dd/MM/yyyy}", GVLista.DataKeys[Id].Values["FECH_CITA"].ToString());
             TxtHrCita.Text = GVLista.DataKeys[Id].Values["HR_CITA"].ToString();
-
+            FillGVDiagnostico();
             TabContainer.ActiveTab = TabDatos;
         }
 
@@ -169,6 +182,84 @@ namespace WebAppClinica.CITAS
             FillGVLista();
             GVLista.PageIndex = e.NewPageIndex;
             GVLista.DataBind();
+        }
+
+        protected void GVDiagnostico_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                TextBox Iddeta = GVDiagnostico.Rows[e.RowIndex].FindControl("TxtIdDiagnostico") as TextBox;
+                CDiagnostico objDiagnostico = new CDiagnostico(StrConexion);
+                objResultado = objDiagnostico.Actualizacion(Convert.ToInt32(Iddeta.Text), "",0,
+                        "", 
+                        TipoActualizacion.Eliminar);
+                if (objResultado.CodigoError == 0)
+                {
+                    FillGVDiagnostico();
+                    RetornarMsj(this, "Registro Eliminado Correctamente");
+                }
+                else
+                {
+                    RetornarMsj(this, objResultado.MensajeError);
+                }
+            }
+            catch (Exception ex)
+            {
+                RetornarMsj(this, Convert.ToString(ex));
+            }
+        }
+
+        protected void TxtObservacion_TextChanged(object sender, EventArgs e)
+        {
+            var txt = (TextBox)sender;
+            var Id = txt.Attributes["CommandName"];
+            string[] Ids = Id.Split(',');
+            try
+            {
+                int ID = Convert.ToInt32(Ids[0]);
+                CDiagnostico objDiagnostico = new CDiagnostico(StrConexion);
+                objResultado = objDiagnostico.Actualizacion(ID, txt.Text, Convert.ToInt32(TxtIDCita.Text),
+                        "",
+                        TipoActualizacion.Actualizar);
+                if (objResultado.CodigoError == 0)
+                {
+                    FillGVDiagnostico();
+                    RetornarMsj(this, "Registro Actualizado Correctamente");
+                }
+                else
+                {
+                    RetornarMsj(this, objResultado.MensajeError);
+                }
+            }
+            catch (Exception ex)
+            {
+                RetornarMsj(this, Convert.ToString(ex));
+            }
+
+        }
+
+        protected void btnAgregarObservacion_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CDiagnostico objDiagnostico = new CDiagnostico(StrConexion);
+                objResultado = objDiagnostico.Actualizacion(0, TxtObservacion.Text, Convert.ToInt32(TxtIDCita.Text),
+                        "",
+                        TipoActualizacion.Adicionar);
+                if (objResultado.CodigoError == 0)
+                {
+                    FillGVDiagnostico();
+                    RetornarMsj(this, "Registro Agregado Correctamente");
+                }
+                else
+                {
+                    RetornarMsj(this, objResultado.MensajeError);
+                }
+            }
+            catch (Exception ex)
+            {
+                RetornarMsj(this, Convert.ToString(ex));
+            }
         }
     }
 }

@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CITAS\CDiagnostico.cs" />
     <Compile Include="CITAS\CCita.cs" />
     <Compile Include="CDatos.cs" />
     <Compile Include="TBC\CPaciente.cs" />

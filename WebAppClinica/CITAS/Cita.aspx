@@ -25,7 +25,6 @@
                         <asp:GridView runat="server" ID="GVLista" Width="100%" CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID,ID_DOCTOR,ID_PACIENTE,HR_CITA,NOMBREDOCTOR,NOMBREPACIENTE,FECH_CITA" EmptyDataText="No existen registros" EnablePersistedSelection="True" EnableSortingAndPagingCallbacks="True" OnPageIndexChanging="GVLista_PageIndexChanging" OnSelectedIndexChanged="GVLista_SelectedIndexChanged">
                             <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
                             <Columns>
-                                <asp:TemplateField Visible="False"></asp:TemplateField>
                                 <asp:BoundField DataField="FECH_CITA" HeaderText="FECHA CITA" DataFormatString="{0:dd/MM/yyyy}" />
                                 <asp:BoundField DataField="HR_CITA" HeaderText="HORA CITA" />
                                 <asp:BoundField DataField="NOMBREPACIENTE" HeaderText="PACIENTE" />
@@ -82,13 +81,72 @@
                         </div>
                         <br />
                         <br />
+                        <div align="center">
+                            <asp:Button ID="BtnModalDiagnostico" runat="server" Text="Agregar Diagnostico" CssClass="form-control" />
+                        </div>
+                        <br />
+                        <asp:GridView runat="server" ID="GVDiagnostico" Width="100%" CellPadding="4" ForeColor="#333333" GridLines="None" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="ID,ID_CITA,DS_OBSERVACION" EmptyDataText="No existen registros" EnablePersistedSelection="True" EnableSortingAndPagingCallbacks="True" OnRowDeleting="GVDiagnostico_RowDeleting">
+                            <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
+                            <Columns>
+
+                                <asp:TemplateField HeaderText="id" Visible="False">
+                                    <ItemTemplate>
+                                        <asp:TextBox ID="TxtIdDiagnostico" runat="server" Text='<%#Eval("ID")%>' Visible="False"></asp:TextBox>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="Diagnostico">
+                                    <ItemTemplate>
+                                        <asp:TextBox ID="TxtObservacion" runat="server" Visible="true" CssClass="form-control" Text='<%#Eval("DS_OBSERVACION")%>' OnTextChanged="TxtObservacion_TextChanged" CommandName='<%#Eval("ID")%>' AutoPostBack="True"></asp:TextBox>
+                                    </ItemTemplate>
+                                    <HeaderStyle CssClass="text-center" />
+                                </asp:TemplateField>
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:Button ID="BtnEliminar" runat="server" class="btn btn-light" CommandName="Delete" OnClientClick="return confirm('¿Desea eliminar este registro?');" Text="Eliminar" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                            <EditRowStyle BackColor="#999999" />
+                            <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
+                            <SelectedRowStyle BackColor="#E2DED6" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#E9E7E2" />
+                            <SortedAscendingHeaderStyle BackColor="#506C8C" />
+                            <SortedDescendingCellStyle BackColor="#FFFDF8" />
+                            <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
+                        </asp:GridView>
                         <br />
                         <br />
                         <br />
                         <br />
                         <br />
                         <br />
-                        <br />
+                        <asp:Panel ID="PanelDiagnostico" CssClass="modalPopup" Height="400px" Width="800px" runat="server">
+                            <contenttemplate>
+                                <div class="row">
+                                        <asp:Label ID="Label5" runat="server" Text="Observación:" CssClass="form-label col-sm-2" Font-Bold="True"></asp:Label>
+
+                                    <div class="col-md-10">
+                                        <asp:TextBox ID="TxtObservacion" runat="server" CssClass="form-control" AutoCompleteType="Disabled" TextMode="MultiLine"></asp:TextBox>
+
+
+                                    </div>
+                                </div>
+                                <br /><br />
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <asp:Button ID="btnAgregarObservacion" runat="server" Text="Agregar Diagnostico" class="btn btn-success" ToolTip="Enviar Solicitud" OnClick="btnAgregarObservacion_Click" />
+                                        <asp:Button ID="btnCerrar" class="btn btn-danger" runat="server" Text="Cerrar" />
+                                    </div>
+                                </div>
+                            </contenttemplate>
+                        </asp:Panel>
+
+                        <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender" runat="server"
+                            PopupControlID="PanelDiagnostico" BackgroundCssClass="modalBackround" TargetControlID="BtnModalDiagnostico" BehaviorID="_content_ModalPopupExtender" DynamicServicePath="">
+                        </ajaxToolkit:ModalPopupExtender>
                     </ContentTemplate>
                 </ajaxToolkit:TabPanel>
             </ajaxToolkit:TabContainer>
